@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "bboxes"
+version = "0.1.0"
+description = "For the straightforward creation, conversion and manipulation of bounding boxes"
+authors = ["Junwoo Isaac Woo <dev.isaacwoo@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pydantic = "^2.8.2"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.6"
+pytest = "^8.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
