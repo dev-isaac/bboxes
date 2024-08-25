@@ -94,3 +94,72 @@ class TestBBoxInit:
             ymax=ymax,
         )
 
+
+@pytest.mark.parametrize(
+    argnames="bbox_other",
+    argvalues=[
+        pytest.param(
+            BBox(
+                origintype=OriginType.TOP_LEFT,
+                xmin=0,
+                ymin=0,
+                xmax=10,
+                ymax=10,
+            )
+        ),
+        pytest.param(
+            BBox(
+                origintype=OriginType.TOP_LEFT,
+                xmin=0,
+                ymin=0,
+                xmax=10 + 1e-10,
+                ymax=10 + 1e-10,
+            )
+        ),
+    ],
+)
+def test_eq(bbox_other: BBox):
+    bbox = BBox(
+        origintype=OriginType.TOP_LEFT,
+        xmin=0,
+        ymin=0,
+        xmax=10,
+        ymax=10,
+    )
+
+    assert bbox == bbox_other
+
+
+@pytest.mark.parametrize(
+    argnames="bbox_other",
+    argvalues=[
+        pytest.param(
+            BBox(
+                origintype=OriginType.BOTTOM_RIGHT,
+                xmin=0,
+                ymin=0,
+                xmax=10,
+                ymax=10,
+            )
+        ),
+        pytest.param(
+            BBox(
+                origintype=OriginType.TOP_LEFT,
+                xmin=0,
+                ymin=0,
+                xmax=10 + 1e-10,
+                ymax=11,
+            )
+        ),
+    ],
+)
+def test_not_eq(bbox_other: BBox):
+    bbox = BBox(
+        origintype=OriginType.TOP_LEFT,
+        xmin=0,
+        ymin=0,
+        xmax=10,
+        ymax=10,
+    )
+    assert bbox != bbox_other
+

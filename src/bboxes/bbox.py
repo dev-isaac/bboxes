@@ -1,5 +1,6 @@
 from __future__ import annotations
 from enum import Enum
+from math import isclose
 from typing import Literal
 
 from pydantic import NonNegativeFloat, PositiveFloat
@@ -40,6 +41,20 @@ class BBox:
         assert (
             self.ymin < self.ymax
         ), f"ymin ({self.ymin}) should not be smaller than ymax ({self.ymax})"
+
+    def __eq__(self, other: BBox) -> bool:
+        """
+        Numerical equivalence relies on math.isclose's default tolerance values
+
+        Will revisit later if needed
+        """
+        return (
+            self.origintype == other.origintype
+            and isclose(self.xmin, other.xmin)
+            and isclose(self.ymin, other.ymin)
+            and isclose(self.xmax, other.xmax)
+            and isclose(self.ymax, other.ymax)
+        )
 
     @property
     def height(self) -> NonNegativeFloat:
