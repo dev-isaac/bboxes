@@ -34,8 +34,12 @@ class BBox:
     ymax: NonNegativeFloat
 
     def __post_init__(self):
-        assert self.xmin <= self.xmax
-        assert self.ymin <= self.ymax
+        assert (
+            self.xmin < self.xmax
+        ), f"xmin ({self.xmin}) should not be smaller than xmax ({self.xmax})"
+        assert (
+            self.ymin < self.ymax
+        ), f"ymin ({self.ymin}) should not be smaller than ymax ({self.ymax})"
 
     @property
     def height(self) -> NonNegativeFloat:
