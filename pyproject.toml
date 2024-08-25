@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "bboxes"
 version = "0.1.0"
-description = "For the straightforward creation, conversion and manipulation of bounding boxes"
+description = "For the straightforward creation, conversion and manipulation of 2D bounding boxes"
 authors = ["Junwoo Isaac Woo <dev.isaacwoo@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -17,3 +17,7 @@ pytest = "^8.3.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[project.urls]
+Homepage = "https://github.com/dev-isaac/bboxes"
+Issues = "https://github.com/dev-isaac/bboxes/issues"
