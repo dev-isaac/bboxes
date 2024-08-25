@@ -1,4 +1,5 @@
 import pytest
+from pydantic import PositiveFloat
 from pydantic_core import ValidationError
 
 from bboxes import BBox, OriginType
@@ -163,3 +164,89 @@ def test_not_eq(bbox_other: BBox):
     )
     assert bbox != bbox_other
 
+
+@pytest.mark.parametrize(
+    argnames=[
+        "to",
+        "dest_bbox",
+        "canvas_width",
+        "canvas_height",
+    ],
+    argvalues=[
+        pytest.param(
+            OriginType.TOP_LEFT,
+            BBox(origintype=OriginType.TOP_LEFT, xmin=0, ymin=0, xmax=10, ymax=10),
+            50,
+            50,
+        ),
+        pytest.param(
+            OriginType.BOTTOM_LEFT,
+            BBox(origintype=OriginType.BOTTOM_LEFT, xmin=0, ymin=40, xmax=10, ymax=50),
+            50,
+            50,
+        ),
+        pytest.param(
+            OriginType.TOP_RIGHT,
+            BBox(origintype=OriginType.TOP_RIGHT, xmin=40, ymin=0, xmax=50, ymax=10),
+            50,
+            50,
+        ),
+        pytest.param(
+            OriginType.BOTTOM_RIGHT,
+            BBox(
+                origintype=OriginType.BOTTOM_RIGHT, xmin=40, ymin=40, xmax=50, ymax=50
+            ),
+            50,
+            50,
+        ),
+    ],
+)
+def test_origin_conversion(
+    to: OriginType,
+    dest_bbox: BBox,
+    canvas_width: PositiveFloat,
+    canvas_height: PositiveFloat,
+):
+    src_bbox = BBox(
+        origintype=OriginType.TOP_LEFT,
+        xmin=0,
+        ymin=0,
+        xmax=10,
+        ymax=10,
+    )
+
+    assert (
+        src_bbox.convert_origin_type(
+            to=to,
+            canvas_width=canvas_width,
+            canvas_height=canvas_height,
+        )
+        == dest_bbox
+    )
+
+
+def test_nonequal_origin_conversion():
+    src_bbox = BBox(
+        origintype=OriginType.TOP_LEFT,
+        xmin=0,
+        ymin=0,
+        xmax=10,
+        ymax=10,
+    )
+
+    other_bbox = BBox(
+        origintype=OriginType.TOP_RIGHT,
+        xmin=0,
+        ymin=0,
+        xmax=10,
+        ymax=10,
+    )
+
+    assert (
+        src_bbox.convert_origin_type(
+            to=OriginType.TOP_RIGHT,
+            canvas_height=100,
+            canvas_width=100,
+        )
+        != other_bbox
+    )
