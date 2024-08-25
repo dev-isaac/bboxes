@@ -12,7 +12,6 @@ from bboxes import BBox, OriginType
     ],
 )
 class TestBBoxInit:
-
     @pytest.mark.parametrize(
         argnames=["xmin", "ymin", "xmax", "ymax"],
         argvalues=[
@@ -23,13 +22,7 @@ class TestBBoxInit:
                 3,
                 id="negative min",
             ),
-            pytest.param(
-                5,
-                0,
-                1,
-                2,
-                id="xmin greater than xmax"
-            ),
+            pytest.param(5, 0, 1, 2, id="xmin greater than xmax"),
             pytest.param(
                 0,
                 0,
@@ -40,7 +33,12 @@ class TestBBoxInit:
         ],
     )
     def test_invalid_bbox_init(
-        self, origin_type: OriginType, xmin: float, ymin: float, xmax: float, ymax: float
+        self,
+        origin_type: OriginType,
+        xmin: float,
+        ymin: float,
+        xmax: float,
+        ymax: float,
     ):
         with pytest.raises(expected_exception=ValidationError):
             BBox(
@@ -50,7 +48,6 @@ class TestBBoxInit:
                 xmax=xmax,
                 ymax=ymax,
             )
-
 
     @pytest.mark.parametrize(
         argnames=["xmin", "ymin", "xmax", "ymax"],
@@ -82,7 +79,12 @@ class TestBBoxInit:
         ],
     )
     def test_bbox_init(
-        self, origin_type: OriginType, xmin: float, ymin: float, xmax: float, ymax: float
+        self,
+        origin_type: OriginType,
+        xmin: float,
+        ymin: float,
+        xmax: float,
+        ymax: float,
     ):
         BBox(
             origintype=origin_type,
@@ -90,4 +92,5 @@ class TestBBoxInit:
             ymin=ymin,
             xmax=xmax,
             ymax=ymax,
-        ),
+        )
+
